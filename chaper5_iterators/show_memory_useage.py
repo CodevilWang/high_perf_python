@@ -17,7 +17,7 @@ else:
 cur_res = resource.getrusage(resource.RUSAGE_SELF)
 print "init memory usage:"
 print cur_res.ru_maxrss
-sum = 0
+sum =
 for i in range_flag(0, 1000000):
     sum += i
     if i == 999999:
