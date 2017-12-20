@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 import time
+from functools import wraps
+def timefn(fn):
+    @wraps(fn)
+    def measure_time(*args, **kwargs):
+        t1 = time.time()
+        result = fn(*args, **kwargs)
+        t2 = time.time()
+        print ("@timefn:" + fn.func_name + " took " + str(t2 - t1) + " seconds")
+        return result
+    return measure_time
+
 x1, x2, y1, y2 = -1.8, 1.8, -1.8, 1.8
 c_real, c_imag = -0.62772, -.42193
 def calculate_z_serialize_purepython(maxiter, zs, cs):
@@ -14,6 +25,7 @@ def calculate_z_serialize_purepython(maxiter, zs, cs):
         output[i] = n
     return output
 
+@timefn
 def calc_pure_python(desired_width, max_iterations):
     x_step = (float(x2 - x1) / float(desired_width))
     y_step = (float(y1 - y2) / float(desired_width))
